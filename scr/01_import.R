@@ -92,16 +92,18 @@ for (i in seq(y.files)) {
   file <- y.files[[i]]
   (wth <-  read.csv(file))
   #Change names
-  names(wth)
-  names(wth)[names(wth) == "ï..date"] <- "datetime"
-  names(wth)[names(wth) == "Air.Temp.ËšF"] <- "temp"
-  names(wth)[names(wth) == "Precipitation..inches."] <- "rain" # note inches! 
-  names(wth)[names(wth) == "Relative.Humidity...."] <- "rh"
+ 
+  
+  names(wth)[grepl("date", names(wth))] <- "datetime"
+  names(wth)[grepl("Temp", names(wth))] <- "temp"
+  names(wth)[grepl("Precipitation", names(wth))] <- "rain" # note inches! 
+  
+  names(wth)[grepl("Relative", names(wth))]  <- "rh"
   # Solar radiation is in langleys
-  names(wth)[names(wth) == "Leaf.Wetness..minutes."] <- "lw"
-  names(wth)[names(wth) == "Solar.Radiation..langleys."] <- "solrad"
-  names(wth)[names(wth) == "Wind.Speed..mph." ] <- "wdspd"
-  names(wth)[names(wth) == "Wind.Direction..degrees." ] <- "wddir"
+  names(wth)[grepl("Leaf.Wetness", names(wth))] <- "lw"
+  names(wth)[grepl("Solar.Radiation", names(wth))]  <- "solrad"
+  names(wth)[grepl("Wind.Speed", names(wth))] <- "wdspd"
+  names(wth)[grepl("Wind.Direction", names(wth))] <- "wddir"
   
   # Set correct class of each variable(some are character in one of files)
   wth$temp <- as.numeric(wth$temp)
